@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров - СтройМатериалы</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">СтройМатериалы - Список товаров</div>
+        <div class="user-section">
+            <span class="user-info">{{ user_name }} ({{ user_role }})</span>
+            <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
+        </div>
+    </div>
+    
+    <!-- Сообщения -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="message message-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    <div class="container">
+        <!-- Панель управления (только для менеджера и администратора) -->
+        {% if user_role == 'Менеджер' or user_role == 'Администратор' %}
+        <div class="control-panel">
+            <!-- Поиск -->
+            <form method="get" style="display: flex; gap: 10px; flex: 1; flex-wrap: wrap;">
+                <input type="text" name="search" value="{{ search_query }}" 
+                       placeholder="Поиск по названию, описанию..." 
+                       style="flex: 1; min-width: 200px;">
+                
+                <!-- Фильтр по производителю -->
+                <select name="manufacturer" onchange="this.form.submit()">
+                    <option value="">Все производители</option>
+                    {% for manufacturer in manufacturers %}
+                    <option value="{{ manufacturer.id_manufacturer }}" 
+                            {% if manufacturer_filter == manufacturer.id_manufacturer|stringformat:"s" %}selected{% endif %}>
+                        {{ manufacturer.manufacturer_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                
+                <!-- Сортировка -->
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="product_name" {% if sort_by == 'product_name' %}selected{% endif %}>По названию</option>
+                    <option value="price" {% if sort_by == 'price' %}selected{% endif %}>По цене</option>
+                    <option value="stock_quantity" {% if sort_by == 'stock_quantity' %}selected{% endif %}>По количеству</option>
+                    <option value="discount_percent" {% if sort_by == 'discount_percent' %}selected{% endif %}>По скидке</option>
+                </select>
+                
+                <select name="order" onchange="this.form.submit()">
+                    <option value="asc" {% if sort_order == 'asc' %}selected{% endif %}>По возрастанию</option>
+                    <option value="desc" {% if sort_order == 'desc' %}selected{% endif %}>По убыванию</option>
+                </select>
+                
+                <button type="submit" class="btn">Применить</button>
+            </form>
+            
+            <!-- Кнопка добавления товара (только для администратора) -->
+            {% if user_role == 'Администратор' %}
+            <a href="{% url 'product_add' %}" class="btn">Добавить товар</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <!-- Таблица товаров -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Фото</th>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Описание</th>
+                    <th>Производитель</th>
+                    <th>Поставщик</th>
+                    <th>Цена</th>
+                    <th>Ед. изм.</th>
+                    <th>Кол-во на складе</th>
+                    <th>Скидка</th>
+                    {% if user_role == 'Администратор' %}
+                    <th>Действия</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="{% if product.stock_quantity == 0 %}no-stock{% endif %} {% if product.discount_percent > 12 %}high-discount{% endif %}">
+                    <td>
+                        {% if product.photo_path %}
+                            <img src="/media/{{ product.photo_path }}" alt="{{ product.product_name }}" class="product-photo">
+                        {% else %}
+                            <img src="{% static 'picture.png' %}" alt="Нет фото" class="product-photo">
+                        {% endif %}
+                    </td>
+                    <td>{{ product.product_name }}</td>
+                    <td>{{ product.id_category.category_name }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.id_manufacturer.manufacturer_name }}</td>
+                    <td>{{ product.id_supplier.supplier_name }}</td>
+                    <td>
+                        {% if product.discount_percent > 0 %}
+                            <span class="old-price">{{ product.price|floatformat:2 }} руб.</span>
+                            <span class="new-price">{{ product.get_final_price|floatformat:2 }} руб.</span>
+                        {% else %}
+                            {{ product.price|floatformat:2 }} руб.
+                        {% endif %}
+                    </td>
+                    <td>{{ product.id_unit.unit_name }}</td>
+                    <td>{{ product.stock_quantity }}</td>
+                    <td>{{ product.discount_percent }}%</td>
+                    {% if user_role == 'Администратор' %}
+                    <td>
+                        <div class="action-btns">
+                            <a href="{% url 'product_edit' product.article %}" class="btn">Редактировать</a>
+                            <form method="post" action="{% url 'product_delete' product.article %}" 
+                                  style="display: inline;" 
+                                  onsubmit="return confirm('Вы уверены, что хотите удалить товар {{ product.product_name }}?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </div>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

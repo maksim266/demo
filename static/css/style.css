@@ -1,0 +1,375 @@
+/* ============================================
+   Основные стили приложения СтройМатериалы
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Calibri, sans-serif;
+    background-color: #FFFFFF;
+    min-height: 100vh;
+}
+
+/* ============================================
+   Header (шапка сайта)
+   ============================================ */
+
+.header {
+    background-color: #DAA520;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    min-height: 70px;
+}
+
+.header-title {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.user-info {
+    color: #FFFFFF;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+/* ============================================
+   Кнопки
+   ============================================ */
+
+.logout-btn,
+.back-btn,
+.btn {
+    background-color: #B8860B;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-family: Calibri, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.logout-btn:hover,
+.back-btn:hover,
+.btn:hover {
+    background-color: #9A7209;
+}
+
+.btn-secondary {
+    background-color: #6C757D;
+}
+
+.btn-secondary:hover {
+    background-color: #5A6268;
+}
+
+.btn-danger {
+    background-color: #DC3545;
+}
+
+.btn-danger:hover {
+    background-color: #C82333;
+}
+
+/* ============================================
+   Контейнер
+   ============================================ */
+
+.container {
+    padding: 20px;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+/* ============================================
+   Панель управления (поиск, фильтры, сортировка)
+   ============================================ */
+
+.control-panel {
+    background-color: #F5F5F5;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.control-panel input,
+.control-panel select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: Calibri, sans-serif;
+    font-size: 14px;
+}
+
+.control-panel input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* ============================================
+   Таблица товаров
+   ============================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    min-width: 1200px;
+}
+
+th {
+    background-color: #DAA520;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: bold;
+    border: 1px solid #B8860B;
+}
+
+th a {
+    color: white;
+    text-decoration: none;
+}
+
+th a:hover {
+    text-decoration: underline;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+}
+
+tr.no-stock {
+    background-color: #ADD8E6;
+}
+
+tr.high-discount {
+    background-color: #F4A460;
+}
+
+/* ============================================
+   Цены
+   ============================================ */
+
+.old-price {
+    text-decoration: line-through;
+    color: red;
+    margin-right: 10px;
+    display: block;
+}
+
+.new-price {
+    color: black;
+    font-weight: bold;
+    display: block;
+}
+
+/* ============================================
+   Фото товара
+   ============================================ */
+
+.product-photo {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+}
+
+/* ============================================
+   Кнопки действий (редактировать/удалить)
+   ============================================ */
+
+.action-btns {
+    display: flex;
+    gap: 5px;
+}
+
+/* ============================================
+   Сообщения (уведомления)
+   ============================================ */
+
+.messages {
+    padding: 10px 20px;
+}
+
+.message {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    font-family: Calibri, sans-serif;
+}
+
+.message-success {
+    background-color: #D4EDDA;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+}
+
+.message-error {
+    background-color: #F8D7DA;
+    color: #721C24;
+    border: 1px solid #F5C6CB;
+}
+
+.message-warning {
+    background-color: #FFF3CD;
+    color: #856404;
+    border: 1px solid #FFEAA7;
+}
+
+/* ============================================
+   Форма добавления/редактирования товара
+   ============================================ */
+
+.form-container {
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: Calibri, sans-serif;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-group input[readonly] {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.photo-preview {
+    margin-top: 10px;
+}
+
+.photo-preview img {
+    max-width: 300px;
+    max-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* ============================================
+   Страница входа (login)
+   ============================================ */
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #DAA520;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 350px;
+}
+
+.login-container h1 {
+    color: #FFFFFF;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-family: Calibri, sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #B8860B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: Calibri, sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.login-container button:hover {
+    background-color: #9A7209;
+}
+
+.guest-btn {
+    background-color: #FFFFFF !important;
+    color: #B8860B !important;
+    margin-top: 15px;
+}
+
+.error {
+    color: #FF0000;
+    text-align: center;
+    margin-bottom: 10px;
+}
